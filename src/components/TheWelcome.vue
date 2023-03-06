@@ -1,33 +1,32 @@
 <script setup lang="ts">
-import { NButton, NSpace,NAutoComplete, NDatePicker } from 'naive-ui'
-import { ref, computed } from 'vue'
+import { NButton, NSpace, NAutoComplete, NDatePicker } from 'naive-ui';
+import { ref, computed } from 'vue';
 
-import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
-
+import WelcomeItem from './WelcomeItem.vue';
+import DocumentationIcon from './icons/IconDocumentation.vue';
+import ToolingIcon from './icons/IconTooling.vue';
+import EcosystemIcon from './icons/IconEcosystem.vue';
+import CommunityIcon from './icons/IconCommunity.vue';
+import SupportIcon from './icons/IconSupport.vue';
 
 const valueRef = ref('');
 let value = valueRef;
 const options = computed(() => {
-        return ['@gmail.com', '@163.com', '@qq.com'].map((suffix) => {
-          const prefix = valueRef.value.split('@')[0]
-          return {
-            label: prefix + suffix,
-            value: prefix + suffix
-          }
-        })
-      });
+  return ['@gmail.com', '@163.com', '@qq.com'].map((suffix) => {
+    const prefix = valueRef.value.split('@')[0];
+    return {
+      label: prefix + suffix,
+      value: prefix + suffix
+    };
+  });
+});
 let range = ref<[number, number]>([1183135260000, Date.now()]);
 </script>
 
 <template>
-    <n-button>naive-ui</n-button>
-    <n-space>
-      <n-auto-complete
+  <n-button>naive-ui</n-button>
+  <n-space>
+    <n-auto-complete
       v-model:value="value"
       :input-props="{
         autocomplete: 'disabled'
@@ -36,7 +35,6 @@ let range = ref<[number, number]>([1183135260000, Date.now()]);
       placeholder="Email"
     />
     <n-date-picker v-model:value="range" type="datetimerange" clearable />
-
   </n-space>
 
   <WelcomeItem>
