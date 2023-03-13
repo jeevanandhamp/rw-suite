@@ -1,25 +1,61 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
+import type { RouteRecordRaw } from 'vue-router';
+
 import { isProxy, toRaw } from 'vue';
 
-import { useAuthStore } from '../stores/auth.store';
-import HomeView from '../views/HomeView.vue';
-import LoginView from '../views/LoginView.vue';
+import { useAuthStore } from '@/stores/auth.store';
+import HomeView from '@/pages/app/HomeView.vue';
 
+import AppLayout from '@/layouts/AppLayout.vue'
+
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/:catchAll(.*)',
+    redirect: { name: 'dashboard' },
+  },
+  { 
+    path: '/', 
+    component: AppLayout,
+    children:[
+      {component: HomeView, path: ''}
+    ],
+  },
+  { path: '/login', component: () => import('@/pages/login/LoginView.vue') },
+  {
+    path: '/about',
+    name: 'about',
+    component: AppLayout,
+    children: [{
+      component: () => import('@/pages/app/AboutView.vue'), path: ''
+    }]
+  },
+  { 
+    path: '/hikeathon',
+    component: AppLayout,
+    children:[{
+      component: () => import('@/pages/app/HikeathonView.vue'),
+      path: ''
+    }]
+    },
+  {
+    name: 'products',
+    path: '/products',
+    component: AppLayout,
+    children: [
+      {
+        name: 'spec-table',
+        path: 'spec-table',
+        component: () => import('@/pages/app/products/specs/ProductSpecTable.vue'),
+      }
+    ]
+  }
+];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active',
-  routes: [
-    { path: '/', component: HomeView },
-    { path: '/login', component: LoginView },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
+  routes: routes
 });
 
 router.beforeEach(async (to) => {
@@ -49,7 +85,7 @@ router.beforeEach(async (to) => {
 export default router;
 
 // import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
+// import HomeView from '@/views/HomeView.vue'
 
 // const router = createRouter({
 //   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,7 +101,7 @@ export default router;
 //       // route level code-splitting
 //       // this generates a separate chunk (About.[hash].js) for this route
 //       // which is lazy-loaded when the route is visited.
-//       component: () => import('../views/AboutView.vue')
+//       component: () => import('@/views/AboutView.vue')
 //     }
 //   ]
 // })

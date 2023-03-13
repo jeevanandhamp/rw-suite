@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .item {
   margin-top: 2rem;
   display: flex;
@@ -38,6 +38,11 @@ h3 {
   font-weight: 500;
   margin-bottom: 0.4rem;
   color: var(--color-heading);
+
+  
+  &:hover {
+    color: greenyellow;
+  }
 }
 
 @media (min-width: 1024px) {

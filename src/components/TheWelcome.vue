@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NButton, NSpace, NAutoComplete, NDatePicker } from 'naive-ui';
+import { NButton, NSpace, NAutoComplete, NDatePicker, NDropdown, darkTheme} from 'naive-ui';
 import { ref, computed } from 'vue';
 
 import WelcomeItem from './WelcomeItem.vue';
@@ -20,12 +20,15 @@ const options = computed(() => {
     };
   });
 });
+
 let range = ref<[number, number]>([1183135260000, Date.now()]);
 </script>
 
 <template>
+  <n-config-provider theme-name="dark">
   <n-button>naive-ui</n-button>
   <n-space>
+   
     <n-auto-complete
       v-model:value="value"
       :input-props="{
@@ -35,8 +38,9 @@ let range = ref<[number, number]>([1183135260000, Date.now()]);
       placeholder="Email"
     />
     <n-date-picker v-model:value="range" type="datetimerange" clearable />
-  </n-space>
 
+  </n-space>
+</n-config-provider>
   <WelcomeItem>
     <template #icon>
       <DocumentationIcon />
