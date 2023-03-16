@@ -13,7 +13,11 @@ import AppLayout from '@/layouts/AppLayout.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:catchAll(.*)',
-    redirect: { name: 'dashboard' },
+    redirect: { path: '/coming-soon' },
+  },
+  {
+    path: '/logout',
+    component: AppLayout,
   },
   { 
     path: '/', 
@@ -24,11 +28,11 @@ const routes: Array<RouteRecordRaw> = [
   },
   { path: '/login', component: () => import('@/pages/login/LoginView.vue') },
   {
-    path: '/about',
-    name: 'about',
+    path: '/coming-soon',
+    name: 'coming-soon',
     component: AppLayout,
     children: [{
-      component: () => import('@/pages/app/AboutView.vue'), path: ''
+      component: () => import('@/pages/app/ComingSoon.vue'), path: ''
     }]
   },
   { 
@@ -60,7 +64,8 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login'];
+  const loginPath = '/login';
+  const publicPages = [loginPath];
   const logoutRoute = '/logout';
   console.log(to.path);
 
@@ -69,6 +74,10 @@ router.beforeEach(async (to) => {
   console.log(logoutRoute.includes(to.path));
   if (to.path != '/' && logoutRoute.includes(to.path)) {
     return auth.logout();
+  }
+
+  if(to.path == loginPath && auth.isAuthenticated()) {
+    return '/';
   }
   const authRequired = !publicPages.includes(to.path);
 

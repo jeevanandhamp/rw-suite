@@ -6,22 +6,18 @@
       :options="optionList"
       source-filterable
       target-filterable
+      size="large"
     />
 </template>
 
 <script setup lang="ts">
-  import { ref, defineProps, toRefs, onMounted } from 'vue';
+  import { ref, defineProps, toRefs, defineExpose } from 'vue';
   import {NTransfer} from "naive-ui";
-  import type { IListTransfer } from './interface/IListTransfer';
+  import type { IListTransfer } from '@/types/IListTransfer';
 
   const props = defineProps({
     optionList: Array<IListTransfer>,
   });
-
-
-  // function createValues () {
-  //   return Array.from({ length: 50 }).map((v, i) => i)
-  // }
 
   const selectedValues = ref([]);
 
@@ -30,5 +26,5 @@
   }
 
   const { optionList } = toRefs(props);
-
+  defineExpose({ getSelectedValues });
 </script>

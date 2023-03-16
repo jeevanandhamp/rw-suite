@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import DropDown from '@/components/DropDown.vue';
-import type { IListTransfer } from '@/components/interface/IListTransfer';
-import ListTransfer from '@/components/ListTransfer.vue';
+import { ref } from 'vue';
+import DropDown from '@/components/tobedeleted/DropDown.vue';
+import type { IListTransfer } from '@/types/IListTransfer';
+import ListTransfer from '@/components/common/ListTransfer.vue';
+import CopyToClipboard from '@/components/common/CopyToClipboard.vue';
+
+const presetColumns = ref();
+
+const teamName = ref("");
 
 function createOptions () {
   let optionList : Array<IListTransfer> = [];
@@ -16,8 +22,9 @@ function createOptions () {
   }
 
 function getSelectedValues() {
-  console.log("selectd Value");
+  console.log("selectd Value", presetColumns.value.getSelectedValues().value);
 }
+
 </script>
 
 
@@ -28,8 +35,14 @@ function getSelectedValues() {
     <DropDown
     ></DropDown>
     <ListTransfer
-    :option-list="createOptions()"></ListTransfer>
-    <button :click="getSelectedValues()">Click</button>
+    ref="presetColumns"
+    :option-list="createOptions()"
+    width = 100%
+    ></ListTransfer>
+    <input v-model="teamName" type="text"  placeholder="Please enter the text..."/>
+    <copy-to-clipboard :success-text="'Copied'" :code="teamName"></copy-to-clipboard>
+    
+    <button @click="getSelectedValues">Click</button>
   </div>
 </template>
 
