@@ -8,6 +8,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import HomeView from '@/pages/app/HomeView.vue';
 
 import AppLayout from '@/layouts/AppLayout.vue'
+import RootLayout from '@/layouts/RouterBypass.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -47,6 +48,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'products',
     path: '/products',
     component: AppLayout,
+    //component: RootLayout,
     children: [
       {
         name: 'spec-table',
