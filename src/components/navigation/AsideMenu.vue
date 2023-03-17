@@ -4,9 +4,22 @@
 <script setup lang="ts">
 import MenuItem from "@/components/navigation/components/MenuItem.vue";
 import { useAuthStore } from '@/stores/auth.store';
-
-import { ref } from 'vue'
+import IconCommunity from '@/components/icons/IconCommunity.vue';
+import IconDocumentation from '@/components/icons/IconDocumentation.vue';
+import IconEcosystem from '@/components/icons/IconEcosystem.vue';
+import IconSupport from '@/components/icons/IconSupport.vue';
+import IconTooling from '@/components/icons/IconTooling.vue';
+import AsideMenu from '@/components/navigation/AsideMenu.vue';
+import { ref, defineProps, defineEmits, toRefs } from 'vue'
 const authStore = useAuthStore();
+const emit = defineEmits(['collapse-open'])
+
+const props = defineProps( {
+  collapsed:{
+    type: Boolean,
+    default: false
+  }
+});
 
 const result = ref({
   menus: [
@@ -54,24 +67,39 @@ const result = ref({
 }
     );
 
+let menuVal = ref('');
+
+function updateSubmenu(actionName:string) {
+  menuVal.value = actionName;
+  emit('collapse-open');
+}
 </script>
 
 <template>
-  
-  <div class="aside-bar-container" :menu="result">
-    <div class="erp-logo erp"></div>
-    <!-- <menu-item
-      v-for="menu in result.menus"
-      :key="menu.title"
-      :menu="menu"
-    ></menu-item> -->
-    <nav>
-      <router-link to="/products/spec-table">Products Spec table</router-link>
-      <router-link to="/">home</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/hikeathon">Hikeathon</router-link>
-      <router-link v-if="authStore.isAuthenticated()" to="/logout">Logout</router-link>
-    </nav>
+  <div class="aside-bar">
+    <div class="aside-bar-container" :menu="result">
+      <div class="erp-logo erp"></div>
+      <!-- <menu-item
+        v-for="menu in result.menus"
+        :key="menu.title"
+        :menu="menu"
+      ></menu-item> -->
+      <nav>
+        <a @mouseover="updateSubmenu('Product Spec 1')"><IconCommunity/></a>
+        <a @mouseover="updateSubmenu('Product Spec 2')"><IconDocumentation/></a>
+        <a @mouseover="updateSubmenu('Product Spec 3')"><IconEcosystem/></a>
+        <a @mouseover="updateSubmenu('Product Spec 4')"><IconSupport/></a>
+        <router-link v-if="authStore.isAuthenticated()" to="/logout">Logout</router-link>
+      </nav>
+    </div>
+    <div class="sub-menu">
+      <nav>
+        <router-link to="/products/spec-table"><IconCommunity/>{{ menuVal }}</router-link>
+        <router-link to="/"><IconDocumentation/>{{ menuVal }}</router-link>
+        <router-link to="/about"><IconEcosystem/>{{ menuVal }}</router-link>
+        <router-link to="/hikeathon"><IconSupport/>{{ menuVal }}</router-link>
+      </nav>
+    </div>
   </div>
    <!-- <Sub-Menubar-View v-show="result"></Sub-Menubar-View>  -->
 </template>
@@ -92,7 +120,6 @@ nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
 }
 
 nav a.router-link-exact-active {
@@ -131,12 +158,10 @@ nav a:first-of-type {
   }
 
   nav {
-    text-align: left;
-    margin-left: -1rem;
+    text-align: center;
     font-size: 1rem;
-
+    
     padding: 1rem 0;
-    margin-top: 1rem;
   }
 }
 </style>

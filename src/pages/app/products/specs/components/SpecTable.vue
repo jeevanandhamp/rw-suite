@@ -7,6 +7,7 @@
         size="large"
         :scroll-x="1800"
         :row-key="(row) => row['sku']"
+        :max-height="'80vh'"
       />
     </n-space>
   </n-card>

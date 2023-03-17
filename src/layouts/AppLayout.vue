@@ -6,22 +6,32 @@
       <n-dialog-provider>
         <n-notification-provider>
           <n-message-provider>
-            <n-layout>
-            <div class="app-layout">
-              <aside-menu-view></aside-menu-view>
-              <header-view></header-view>
-              <div>
-                
-              </div>
-              <div class="app-layout__content">
-                <div class="app-layout__page">
-                  <div class="layout fluid">
+            <n-space>
+              <n-layout>
+                <n-layout has-sider>
+                  <n-layout-sider
+                    bordered
+                    show-trigger
+                    collapse-mode="width"
+                    :collapsed-width="100"
+                    :width="240"
+                    :native-scrollbar="false"
+                    :position="'static'"
+                    :collapsed="collapsed"
+                    @collapse="collapsed = true"
+                    @expand="collapsed = false"
+                  >
+                  <aside-menu-view @collapse-open="openSubMenu"></aside-menu-view>
+                  </n-layout-sider>
+                  <n-layout :native-scrollbar="false">
+                    <n-layout-header>
+                      <header-view></header-view>
+                    </n-layout-header>
                     <router-view />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </n-layout>
+                  </n-layout>
+                </n-layout>
+              </n-layout>
+            </n-space>
           </n-message-provider>
         </n-notification-provider>
       </n-dialog-provider>
@@ -34,10 +44,31 @@
 import { RouterLink, RouterView } from 'vue-router';
 import HeaderView from '@/components/header/HeaderIndex.vue';
 import AsideMenuView from '@/components/navigation/AsideMenu.vue';
-
-import { darkTheme, lightTheme, NLayout, NConfigProvider, NLoadingBarProvider, NDialogProvider, NNotificationProvider, NMessageProvider} from 'naive-ui'
+import { ref } from 'vue';
+import { 
+  darkTheme, 
+  lightTheme, 
+  NSpace, 
+  NLayout, 
+  NSwitch,
+  NLayoutHeader,
+  NLayoutSider,
+  NLayoutContent,
+  NScrollbar,
+  NConfigProvider, 
+  NLoadingBarProvider, 
+  NDialogProvider, 
+  NNotificationProvider, 
+  NMessageProvider
+} from 'naive-ui'
 import { useAppStore } from '@/stores/app.store'
 
 const appStore = useAppStore()
+const collapsed = ref(true);
+let menuVal;
+function openSubMenu() {
+  collapsed.value = false;
+  console.log(collapsed.value);
+}
 
 </script>

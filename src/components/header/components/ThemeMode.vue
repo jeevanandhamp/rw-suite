@@ -10,5 +10,12 @@ const toggleDark = () => {
 </script>
 
 <template>
-  {{isDark? "Dark" : "Light"}} <n-switch v-model:value="isDark" @update:value="toggleDark" />
+  <n-switch v-model:value="isDark" @update:value="toggleDark">
+    <template #checked>
+        Dark
+      </template>
+      <template #unchecked>
+        Light
+      </template>
+  </n-switch>
 </template>

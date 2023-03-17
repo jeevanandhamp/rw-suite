@@ -25,11 +25,23 @@ a,
   display: inline;
   float: left;
   height: 100vh;
-  border-right: var(--color-border) solid 1px;
 }
 .app-layout__content {
   width: 90%;
   display: flex;
   flex-direction: column;
   margin: auto;
+}
+.aside-bar {
+  display: flex;
+  flex-direction: row;
+  width: var(--hk-nav-width);
+  border-right: var(--color-border) solid 1px;
+}
+
+
+.aside-bar .sub-menu {
+  padding: 5rem 4px;
+  display: flex;
+  flex-direction: column;
 }
