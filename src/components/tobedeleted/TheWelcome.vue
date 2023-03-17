@@ -25,7 +25,6 @@ let range = ref<[number, number]>([1183135260000, Date.now()]);
 </script>
 
 <template>
-  <n-config-provider theme-name="dark">
   <n-button>naive-ui</n-button>
   <n-space>
    
@@ -40,7 +39,6 @@ let range = ref<[number, number]>([1183135260000, Date.now()]);
     <n-date-picker v-model:value="range" type="datetimerange" clearable />
 
   </n-space>
-</n-config-provider>
   <WelcomeItem>
     <template #icon>
       <DocumentationIcon />

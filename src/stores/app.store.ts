@@ -18,7 +18,6 @@ export const useAppStore = defineStore('app', {
     setDark(isDark:boolean) {
       this.isDark = isDark
     },
-    /** 切换/关闭 暗黑模式 */
     toggleDark() {
       this.isDark = !this.isDark
     },

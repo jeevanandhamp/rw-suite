@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app.store'
-import { useDark, useToggle } from '@vueuse/core'
 import { ref } from 'vue'
 import { NSwitch } from 'naive-ui'
 const appStore = useAppStore()
-const isDark =  ref(useDark())
+const isDark =  ref(appStore.isDark)
 const toggleDark = () => {
   appStore.toggleDark()
-  useToggle(isDark)()
 }
 </script>
 
