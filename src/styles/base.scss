@@ -19,9 +19,12 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --hk-green-color: hsl(160, 100%, 37%);
+  
+  --hk-nav-width: 120px;
+  --hk-nav-brd-color: var(--hk-green-color);
+  --hk-nav-bg-color: #0E2A35;
 
-
-  --hk-nav-width: 100px;
 }
 
 /* semantic color variables for this project */
@@ -73,3 +76,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+

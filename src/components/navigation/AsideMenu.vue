@@ -2,17 +2,24 @@
 
 
 <script setup lang="ts">
-import MenuItem from "@/components/navigation/components/MenuItem.vue";
 import { useAuthStore } from '@/stores/auth.store';
 import IconCommunity from '@/components/icons/IconCommunity.vue';
 import IconDocumentation from '@/components/icons/IconDocumentation.vue';
 import IconEcosystem from '@/components/icons/IconEcosystem.vue';
 import IconSupport from '@/components/icons/IconSupport.vue';
-import IconTooling from '@/components/icons/IconTooling.vue';
-import AsideMenu from '@/components/navigation/AsideMenu.vue';
 import { ref, defineProps, defineEmits, toRefs } from 'vue'
+import IconPurchasing from '@/components/icons/IconPurchasing.vue';
+import IconWarehouse from '@/components/icons/IconWarehouse.vue';
+import IconAccounting from '@/components/icons/IconAccounting.vue';
+import IconOrders from '@/components/icons/IconOrders.vue';
+import IconReturns from '@/components/icons/IconReturns.vue';
+import IconDashboard from '@/components/icons/IconDashboard.vue';
+import IconProducts from '@/components/icons/IconProducts.vue';
+import IconSetting from '@/components/icons/IconSetting.vue';
+import IconOther from '@/components/icons/IconOther.vue';
+import { NScrollbar } from 'naive-ui';
 const authStore = useAuthStore();
-const emit = defineEmits(['collapse-open'])
+const emit = defineEmits(['collapse-open', 'collapse-close'])
 
 const props = defineProps( {
   collapsed:{
@@ -67,60 +74,242 @@ const result = ref({
 }
     );
 
-let menuVal = ref('');
 
-function updateSubmenu(actionName:string) {
-  menuVal.value = actionName;
+interface SubMenu {
+  icon: string, title: string, route: string
+};
+
+const menuVal = ref();
+
+const menuItems = [
+  {icon: "IconWarehouse", title: "Warehouse", 
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"},
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"},
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"},
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconAccounting", title: "Accounting",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconOrders", title: "Orders",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconReturns", title: "Returns",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconDashboard", title: "Dashboard",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconProducts", title: "Products",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]
+  },
+  {icon: "IconSetting", title: "Setting",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconOther", title: "Other",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconWarehouse", title: "Warehouse", 
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconAccounting", title: "Accounting",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconOrders", title: "Orders",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconReturns", title: "Returns",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconDashboard", title: "Dashboard",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconProducts", title: "Products",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]
+  },
+  {icon: "IconSetting", title: "Setting",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]},
+  {icon: "IconOther", title: "Other",
+  subMenu:[
+    {icon: "IconAccounting", title: "Accounting"},
+    {icon: "IconOrders", title: "Orders"},
+    {icon: "IconReturns", title: "Returns"},
+    {icon: "IconDashboard", title: "Dashboard"},
+    {icon: "IconProducts", title: "Products"},
+    {icon: "IconSetting", title: "Setting"}
+  ]}
+];
+
+function getMenuIconComponent(iconComponent:string) {
+    if('IconWarehouse' === iconComponent)
+      return IconWarehouse;
+    else if('IconAccounting' === iconComponent)
+      return IconAccounting;
+    else if('IconOrders' === iconComponent)
+      return IconOrders;
+    else if('IconReturns' === iconComponent)
+      return IconReturns;
+    else if('IconDashboard' === iconComponent)
+      return IconDashboard;
+    else if('IconProducts' === iconComponent)
+      return IconProducts;
+    else if('IconSetting' === iconComponent)
+      return IconSetting;
+    else
+      return IconOther;
+}
+
+function updateSubmenu(menuItems:any) {
+  menuVal.value = menuItems;
   emit('collapse-open');
 }
 </script>
 
 <template>
   <div class="aside-bar">
-    <div class="aside-bar-container" :menu="result">
-      <div class="erp-logo erp"></div>
-      <!-- <menu-item
-        v-for="menu in result.menus"
-        :key="menu.title"
-        :menu="menu"
-      ></menu-item> -->
+    <div  style="height: 100vh">
+    <div class="aside-bar-menu">
+      <div class="erp-logo">
+        <img src="/logo.svg" alt="'RW 3.0'"/>
+      </div>
       <nav>
-        <a @mouseover="updateSubmenu('Product Spec 1')"><IconCommunity/></a>
-        <a @mouseover="updateSubmenu('Product Spec 2')"><IconDocumentation/></a>
-        <a @mouseover="updateSubmenu('Product Spec 3')"><IconEcosystem/></a>
-        <a @mouseover="updateSubmenu('Product Spec 4')"><IconSupport/></a>
+        <template v-for="(item, idx) in menuItems" :key="idx">
+          <a @click="updateSubmenu(item?.subMenu)"  class="nv-itm">
+            <div>
+              <component :is="getMenuIconComponent(item.icon)"/>
+              <div>{{ item.title }}</div>
+            </div>
+          </a>
+        </template>
         <router-link v-if="authStore.isAuthenticated()" to="/logout">Logout</router-link>
       </nav>
     </div>
-    <div class="sub-menu">
+  </div>
+    <NScrollbar class="sub-menu"  style="height: 100vh">
       <nav>
-        <router-link to="/products/spec-table"><IconCommunity/>{{ menuVal }}</router-link>
-        <router-link to="/"><IconDocumentation/>{{ menuVal }}</router-link>
-        <router-link to="/about"><IconEcosystem/>{{ menuVal }}</router-link>
-        <router-link to="/hikeathon"><IconSupport/>{{ menuVal }}</router-link>
+        <template v-for="(item, idx) in menuVal" :key="idx">
+          <router-link to="item.route"  class="nv-sb-itm">
+              <component :is="getMenuIconComponent(item.icon)"/>
+              <div>{{ item.title }}</div>
+          </router-link>
+        </template>
+        
       </nav>
-    </div>
+    </NScrollbar>
   </div>
    <!-- <Sub-Menubar-View v-show="result"></Sub-Menubar-View>  -->
 </template>
 
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-}
+<style scoped lang="css">
 
 nav a.router-link-exact-active {
   color: var(--color-text);
@@ -133,7 +322,6 @@ nav a.router-link-exact-active:hover {
 nav a {
   display: block;
   padding: 1rem 1rem;
-  border-left: 1px solid var(--color-border);
 }
 
 nav a:first-of-type {

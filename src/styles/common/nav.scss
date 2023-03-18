@@ -1,0 +1,46 @@
+.aside-bar {
+  display: flex;
+  flex-direction: row;
+  .aside-bar-menu {
+    background: var(--hk-nav-bg-color);
+    width: var(--hk-nav-width);
+    .erp-logo {
+      padding: 12px;
+    }
+    .nv-itm {
+      border-left: 4px solid transparent;
+      &:hover {
+        border-left: 4px solid var(--hk-nav-brd-color);
+        // TODO SVG hover as reusable
+        svg {
+          filter: invert(49%) sepia(24%) saturate(1289%) hue-rotate(104deg) brightness(100%) contrast(101%);
+        }
+      }
+    }
+  }
+  .sub-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;;
+    .nv-sb-itm {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      div {
+        padding-left: 12px;
+      }
+    }
+  }
+} 
+.aside-bar-container {
+  width: var(--hk-nav-width);
+  display: inline;
+  float: left;
+  height: 100vh;
+}
+.app-layout__content {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}

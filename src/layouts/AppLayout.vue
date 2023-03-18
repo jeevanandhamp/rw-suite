@@ -13,8 +13,8 @@
                     bordered
                     show-trigger
                     collapse-mode="width"
-                    :collapsed-width="100"
-                    :width="240"
+                    :collapsed-width="120"
+                    :width="340"
                     :native-scrollbar="false"
                     :position="'static'"
                     :collapsed="collapsed"
@@ -24,10 +24,12 @@
                   <aside-menu-view @collapse-open="openSubMenu"></aside-menu-view>
                   </n-layout-sider>
                   <n-layout :native-scrollbar="false">
+                    <n-scrollbar style="height: 100vh" >
                     <n-layout-header>
                       <header-view></header-view>
                     </n-layout-header>
                     <router-view />
+                  </n-scrollbar>
                   </n-layout>
                 </n-layout>
               </n-layout>
@@ -41,20 +43,18 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 import HeaderView from '@/components/header/HeaderIndex.vue';
 import AsideMenuView from '@/components/navigation/AsideMenu.vue';
 import { ref } from 'vue';
 import { 
   darkTheme, 
   lightTheme, 
+  NScrollbar,
   NSpace, 
   NLayout, 
-  NSwitch,
   NLayoutHeader,
   NLayoutSider,
-  NLayoutContent,
-  NScrollbar,
   NConfigProvider, 
   NLoadingBarProvider, 
   NDialogProvider, 

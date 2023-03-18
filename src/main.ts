@@ -5,7 +5,7 @@ import App from './App.vue';
 import router from './router';
 import vue3GoogleLogin from 'vue3-google-login';
 
-import './styles/main.css';
+import './styles/main.scss';
 
 const app = createApp(App);
 
